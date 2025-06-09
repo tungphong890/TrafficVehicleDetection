@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Traffic Vehicle Detection Demo</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; background: #f7f7f7; }
+        .container { max-width: 700px; margin: auto; background: white; padding: 30px; border-radius: 8px; box-shadow: 0 0 15px #ddd; }
+        h1 { text-align: center; }
+        .result-img { display: block; margin: 20px auto; max-width: 100%; height: auto; border: 2px solid #333; }
+        .form-control { margin-bottom: 18px; }
+        label { display: block; margin-bottom: 6px; }
+        select, input[type="file"], button { width: 100%; padding: 10px; font-size: 1em; }
+        .footer { margin-top: 30px; text-align: center; color: #888; }
+        .alert { color: red; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Traffic Vehicle Detection</h1>
+        <form method="POST" enctype="multipart/form-data">
+            <div class="form-control">
+                <label for="file">Select Image or Video (jpg, png, mp4):</label>
+                <input type="file" name="file" id="file" accept=".jpg,.jpeg,.png,.mp4" required>
+            </div>
+            <!-- Model selection removed: YOLOv8 only -->
+            <button type="submit">Predict</button>
+        </form>
+        {% with messages = get_flashed_messages() %}
+          {% if messages %}
+            <div class="alert">
+              {% for msg in messages %}
+                <div>{{ msg }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+        {% endwith %}
+
+        {% if result_url %}
+            <h2>Result:</h2>
+            {% if preview_type == 'image' %}
+                <img src="{{ result_url }}" class="result-img" alt="Prediction Result">
+            {% elif preview_type == 'gif' %}
+                <img src="{{ result_url }}" class="result-img" alt="Prediction Result (GIF)">
+            {% endif %}
+        {% endif %}
+        <div class="footer">
+            &copy; 2025 Traffic Vehicle Detection Demo
+        </div>
+    </div>
+</body>
+</html>
